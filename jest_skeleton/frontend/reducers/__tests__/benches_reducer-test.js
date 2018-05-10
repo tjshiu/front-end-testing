@@ -54,3 +54,4 @@ describe("BenchesReducer", () => {
       expect(oldState).toEqual(oldState);
     });
   });
+});
