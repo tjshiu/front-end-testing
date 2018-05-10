@@ -25,27 +25,32 @@ NOTE: Our frontend state shape looks like this:
 */
 
 describe("BenchesReducer", () => {
-  test("should return the initial state", () => {
+  test("should initialize with an empty object as the default state", () => {
+    // Your code here
     expect(BenchesReducer(undefined, {})).toEqual({});
   });
 
-  test("should handle RECEIVE_BENCHES", () => {
-    let action = {
-      type: BenchActions.RECEIVE_BENCHES,
-      benches: testBenches
-    };
+  describe("handling the RECEIVE_BENCHES action", () => {
+    let action;
 
-    expect(BenchesReducer({}, action)).toEqual(testBenches);
+    beforeEach(() => {
+      // Set up the action that will be passed into the reducer:
+      // Your code here
+      action = {
+        type: BenchActions.RECEIVE_BENCHES,
+        benches: testBenches
+      };
+    });
+
+    test("should replace the state with the action's benches", () => {
+      // Your code here
+      expect(BenchesReducer(undefined, action)).toEqual(testBenches);
+    });
+
+    test("should not modify the old state", () => {
+      // Your code here
+      const oldState = { 1: "oldState" };
+      BenchesReducer(oldState, action);
+      expect(oldState).toEqual(oldState);
+    });
   });
-
-  test("should handle RECEIVE_BENCH", () => {
-    let action = {
-      type: BenchActions.RECEIVE_BENCH,
-      bench: newBench
-    };
-
-    expect(BenchesReducer(testBenches, action)).toEqual(
-      Object.assign({}, testBenches, { 3: newBench })
-    );
-  });
-});
