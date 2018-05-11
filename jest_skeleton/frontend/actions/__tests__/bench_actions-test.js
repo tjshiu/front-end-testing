@@ -28,7 +28,35 @@ describe("simple action creators", () => {
   });
 });
 
-describe("async action creators", () => {});
+describe("async action creators", () => {
+  test("fetchBenches creates RECEIVE_BENCHES after fetching benches", () => {
+    const store = mockStore({ benches: {} });
+    const expectedActions = [
+      { type: actions.RECEIVE_BENCHES, benches: testBenches }
+    ];
+
+    ApiUtil.fetchBenches = jest.fn(() => {
+      return Promise.resolve(testBenches);
+    });
+
+    return store.dispatch(actions.fetchBenches()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  test("fetchBench creates RECEIVE_BENCH after fetching new bench", () => {
+    const store = mockStore({ benches: {} });
+    const expectedActions = [{ type: actions.RECEIVE_BENCH, bench: newBench }];
+
+    ApiUtil.fetchBench = jest.fn(() => {
+      return Promise.resolve(newBench);
+    });
+
+    return store.dispatch(actions.fetchBench()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+});
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve
 // Explanation of what Promise.resolve does:
